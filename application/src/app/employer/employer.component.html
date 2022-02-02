@@ -1,0 +1,119 @@
+<div class="container">
+    <div class="table-responsive">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-8"><h2>Employees <b>Details</b></h2></div>
+                    <div class="col-sm-4">
+                        <div class="search-box">
+                            <i class="material-icons">&#xE8B6;</i>
+                        <input type="text" [(ngModel)]="searchInput.employee_name"  class="form-control"  placeholder="Search&hellip;">
+                        </div>
+                        <div>
+                        <button type="button" class="btn btn-secondary" (click)="this.isShow=true">+Employee</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+            <table  class="table table-striped table-hover table-bordered" >
+                <thead>
+                    <tr>
+                        <th (click)="sort('id')">Profile Id &nbsp;<i class="fa fa-sort"></i></th>
+                        <th (click)="sort('profile_image')">Profile Image &nbsp;<i class="fa fa-sort"></i></th>
+                        <th (click)="sort('employee_name')">Employer Name &nbsp;<i class="fa fa-sort"></i></th>
+                        <th (click)="sort('employee_age')">Employee Age &nbsp;<i class="fa fa-sort"></i></th>
+                        <th (click)="sort('employee_salary')">Employee Salary&nbsp;<i class="fa fa-sort"></i></th>
+                        <th>Action </th>
+                    </tr>
+                </thead>
+                <tbody >
+                    <tr *ngFor ="let i of employeeData | paginate : {itemsPerPage : 10, currentPage: p } 
+                    | orderBy : orderHeader : isDescOrder
+                    | filterBy : searchInput "
+                    >
+                        <td >{{i.id}}</td>
+                        <td>{{i.profile_image}}</td>
+                        <td>{{i.employee_name}}</td>
+                        <td>{{i.employee_age}}</td>
+                        <td>{{i.employee_salary}}</td>
+                        <td>
+                            <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
+                            <a (click)="this.isShow_delete=true" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+                        </td>
+                    </tr>  
+                </tbody>
+
+            </table>
+              
+            <div class="clearfix">
+                <pagination-controls (pageChange)="p = $event" class="float-right">
+                </pagination-controls> 
+            </div>
+        </div>
+    </div>
+    
+<!-- Edit Modal -->
+  <div class="blur_background" *ngIf=(isShow)>
+    <div class="center">
+      <div class="containerx" >
+        <button class="close" type="button"  (click)="this.isShow=false">X</button>
+        <div class="text">ADD EMPLOYEE</div>
+        <form action="#">
+            <div class="data">
+                <label>Employee Name</label>
+                <input type="text" name="username" id="username">
+            </div>
+            <div class="data">
+                <label>Employee Salary</label>
+                <input type="text" name="username" id="username">
+            </div>
+            <div class="data">
+              <label>Employee Age</label>
+              <input type="text" name="username" id="username">
+            </div>
+            <div class="data">
+              <label>Profile Image</label>
+              <input type="text" name="username" id="username">
+            </div>
+            <div class="bttn">
+              <div class="inner"></div>
+              <button   class="btn btn-xs btn-primary mb-3">ADD</button>
+            </div>
+        </form>
+      </div>
+    </div>
+</div>
+
+
+<!-- delete Model -->
+<div class="blur_background" *ngIf=(isShow_delete)  tabindex="-1" role="dialog" aria-labelledby="employeeEditModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+       <div class="modal-content">
+          <div class="modal-header">
+             <h5 class="modal-title" id="updateEmployeeModalLabel">DELETE EMPLOYEE</h5>
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="this.isShow_delete=false">
+             <span aria-hidden="true">&times;</span>
+             </button>
+          </div>
+          <div class="modal-body">
+             <form #editForm="ngForm" >
+                <div class="form-group" style="text-align: center;">
+                   <label for="name"  > Are You Sure  </label>
+
+                </div>
+                <div class="form-group" style="text-align: center;">
+                    <button type="button" class="btn btn-secondary">Delete</button>
+                    &nbsp;&nbsp;&nbsp;
+                    <button type="button"  class="btn btn-danger">Cancel</button> 
+                 </div>
+
+
+             </form>
+          </div>
+       </div>
+    </div>
+  </div>
+  
+  </div>
+   
